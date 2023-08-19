@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="course_registration.css">
+    </head>
+    <body>
+        <form id="dataForm">
+            <p><b>Course Registration</b></p>
+            <table>
+                <tr>
+                    <td>First name:</td>
+                    <td><input type="text" name="firstname" id="firstname" required></td>
+                    <td>Last name:</td>
+                    <td><input type="text" name="lastname" id="lastname" required></td>
+                </tr>
+                <tr>
+                    <td>Department:</td>
+                    <td>
+                        <select id="department" name="department" required>
+                        <option value="" hidden>Select an Option</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="IT">IT</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Mech">ME</option>
+                    </td>
+                    <td>Semester:</td>
+                    <td>
+                        <select id="semester" name="semester" required>
+                        <option value="" hidden>Select an Option</option>
+                        <option value="1">I</option>
+                        <option value="2">II</option>
+                        <option value="3">III</option>
+                        <option value="4">IV</option>
+                        <option value="5">V</option>
+                        <option value="6">VI</option>
+                        <option value="7">VII</option>
+                        <option value="8">VIII</option>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Roll no:</td>
+                    <td><input type="text" name="rollnum" id="rollnum" required></td>
+                    <td>Section:</td>
+                    <td><input type="text" name="section" id="section"></td>
+                </tr>
+                <tr>
+                    <td>Courses:</td>
+                    <td><input type="text" name="course1" id="course1" required></td>
+                    <td colspan="2"><input type="text" name="course2" id="course2"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="text" name="course3" id="course3"></td>
+                    <td colspan="2"><input type="text" name="course4" id="course4"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="text" name="course5" id="course5"></td>
+                    <td colspan="2"><input type="text" name="course6" id="course6"></td>
+                </tr>
+                <tr><td colspan="4"></td></tr>
+                <tr><td colspan="4"><input type="submit" value="Submit"></td></tr>
+            </table>
+        </form>
+        <script>
+            document.getElementById("dataForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
+                <data>
+                <firstname>${data.firstname}</firstname>
+                <lastname>${data.lastname}</lastname>
+                <department>${data.department}</department>
+                <semester>${data.semester}</semester>
+                <rollnum>${data.rollnum}</rollnum>
+                <section>${data.section}</section>
+                <course1>${data.course1}</course1>
+                <course2>${data.course2}</course2>
+                <course3>${data.course3}</course3>
+                <course4>${data.course4}</course4>
+                <course5>${data.course5}</course5>
+                <course6>${data.course6}</course6>
+                </data>`;
+                const blob = new Blob([xmlString], { type: "application/xml" });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = "data.xml";
+                a.click();
+            });
+        </script>      
+    </body>
+</html>
